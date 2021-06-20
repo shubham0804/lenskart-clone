@@ -2,6 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { COLORS } from "../constants/theme";
 import * as Linking from "expo-linking";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -48,14 +52,19 @@ export default function Footer() {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        height: 150,
+        // height: 150,
+        height: hp(21),
         backgroundColor: COLORS.primary,
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
+        paddingHorizontal: wp(5.5),
+
+        // bottom: 0,
     },
     footerText1: {
         color: "white",
         // backgroundColor: "red",
-        marginVertical: 25,
+        // marginVertical: 25,
+        marginVertical: hp(3.5),
         fontWeight: "bold",
         fontSize: RFValue(18),
     },
@@ -66,11 +75,13 @@ const styles = StyleSheet.create({
         fontSize: RFValue(14),
         // fontSize: 14,
         alignSelf: "center",
-        marginLeft: 5,
+        // marginLeft: 5,
+        marginLeft: wp(1.5),
     },
     footerText3: {
         color: "#b9c2c8",
-        marginTop: 3,
+        // marginTop: 3,
+        marginTop: hp(0.4),
         fontSize: RFValue(14),
         // fontSize: 14,
     },
@@ -79,8 +90,10 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     icon: {
-        width: 25,
-        height: 25,
+        // width: 25,
+        width: wp(6),
+        // height: 25,
+        height: wp(6),
         tintColor: COLORS.secondary,
     },
 });

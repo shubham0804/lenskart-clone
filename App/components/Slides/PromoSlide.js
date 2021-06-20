@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, View, useWindowDimensions, ScrollView, Image } from "react-native";
 import { promoSlideData } from "../../data";
 import RippleImage from "../RippleImage";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default PromoSlide = () => {
     const width = useWindowDimensions().width;
     const height = width * 0.6;
+    // console.log(width);
+    // console.log(height);
 
     const [active, setActive] = useState(0);
 
@@ -25,7 +31,9 @@ export default PromoSlide = () => {
                 showsHorizontalScrollIndicator={false}
                 style={{ width, height }}
                 disableIntervalMomentum={true}
-                snapToInterval={335}
+                snapToInterval={wp(93.7)}
+                // snapToInterval={wp(93.7)}
+                // snapToInterval={337}
                 // decelerationRate="normal"
                 decelerationRate={0.8}
                 overScrollMode="never"
@@ -36,9 +44,9 @@ export default PromoSlide = () => {
                             <View key={index}>
                                 <RippleImage
                                     rippleColor="rgba(44,44,44,0.3)"
-                                    rippleStyle={styles.promoSlidePressable}
+                                    rippleStyle={[styles.promoSlidePressable, { height: height }]}
                                     imageSource={image}
-                                    imageStyle={styles.iconSlideImage}
+                                    imageStyle={styles.promoSlideImage}
                                 />
                             </View>
                         );
@@ -47,9 +55,9 @@ export default PromoSlide = () => {
                             <View key={index}>
                                 <RippleImage
                                     rippleColor="rgba(44,44,44,0.3)"
-                                    rippleStyle={[styles.promoSlidePressable, { marginRight: 25 }]}
+                                    rippleStyle={[styles.promoSlidePressable, { marginRight: 20 }]}
                                     imageSource={image}
-                                    imageStyle={styles.iconSlideImage}
+                                    imageStyle={styles.promoSlideImage}
                                 />
                             </View>
                         );
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     pagination: {
         flexDirection: "row",
         position: "absolute",
-        bottom: 25,
+        bottom: hp(2),
         alignSelf: "center",
     },
     dot: {
@@ -91,19 +99,25 @@ const styles = StyleSheet.create({
         height: 7,
     },
     promoSlidePressable: {
-        width: 324,
-        height: 193,
+        flex: 1,
+        // width: wp(92),
+        // height: 193,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 10,
-        marginLeft: 10,
+        // marginTop: -10,
+        // marginBottom: 10,
+        marginLeft: 5,
     },
-    iconSlideImage: {
+    promoSlideImage: {
+        flex: 1,
         width: "100%",
+        height: undefined,
+        aspectRatio: 1.54,
+        // aspectRatio: 1.5,
         resizeMode: "contain",
-        borderRadius: 5,
+        // borderRadius: 5,
         overflow: "hidden",
-        marginHorizontal: 5,
-        paddingHorizontal: 10,
+        // marginHorizontal: 5,
+        // paddingHorizontal: 10,
     },
 });

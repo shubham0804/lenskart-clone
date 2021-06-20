@@ -2,6 +2,10 @@ const iconSlideData = [
     {
         id: 1,
         icon: require("./assets/icons/icon-slide/chat-with-expert.jpg"),
+        onPress: {
+            type: "link",
+            value: "whatsapp://send/?phone=918929853854&text=Hi Lenskart, help me get started!",
+        },
     },
     {
         id: 2,
@@ -42,13 +46,34 @@ const promoSlideData = [
 ];
 
 const customerReviewSlideData = [
-    require("./assets/images/sliders/review/customer-1.jpg"),
-    require("./assets/images/sliders/review/customer-2.jpg"),
-    require("./assets/images/sliders/review/customer-3.jpg"),
-    require("./assets/images/sliders/review/customer-4.gif"),
-    require("./assets/images/sliders/review/customer-5.gif"),
-    require("./assets/images/sliders/review/customer-6.gif"),
-    require("./assets/images/sliders/review/customer-7.gif"),
+    {
+        image: require("./assets/images/sliders/review/customer-1.jpg"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-1.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-2.jpg"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-2.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-3.jpg"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-3.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-4.gif"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-4.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-5.gif"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-5.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-6.gif"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-6.mp4",
+    },
+    {
+        image: require("./assets/images/sliders/review/customer-7.gif"),
+        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-7.mp4",
+    },
 ];
 
 const categoriesIconSlideData = [
@@ -98,11 +123,17 @@ const drawerItems = [
         itemName: "Home",
         icon: require("./assets/icons/drawer/home.png"),
         subItems: null,
+        isExpanded: false,
+        onPress: {
+            type: "navigation",
+            value: "HomeScreen",
+        },
     },
     {
         itemName: "Your Orders",
         icon: require("./assets/icons/drawer/orders.png"),
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "Eyeglasses",
@@ -115,6 +146,7 @@ const drawerItems = [
             { name: "Air Collection" },
             { name: "Air Collection" },
         ],
+        isExpanded: false,
     },
     {
         itemName: "Sunglasses",
@@ -127,21 +159,25 @@ const drawerItems = [
             { name: "Air Collection" },
             { name: "Air Collection" },
         ],
+        isExpanded: false,
     },
     {
         itemName: "Powered Sunglasses",
         icon: require("./assets/icons/drawer/powered-sunglasses.png"),
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "Gold Members Offers",
         icon: null,
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "Avail Gold at Store",
         icon: null,
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "Services",
@@ -154,26 +190,31 @@ const drawerItems = [
             { name: "Air Collection" },
             { name: "Air Collection" },
         ],
+        isExpanded: false,
     },
     {
         itemName: "Rate Us",
         icon: require("./assets/icons/drawer/rate-us.png"),
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "FAQ",
         icon: require("./assets/icons/drawer/faqs.png"),
         subItems: null,
+        isExpanded: false,
     },
     {
         itemName: "Agent Screen Share",
         icon: require("./assets/icons/drawer/screen-share.png"),
         subItems: null,
+        isExpanded: false,
     },
     {
-        itemName: "Agent Screen Share",
-        icon: require("./assets/icons/drawer/screen-share.png"),
+        itemName: "",
+        // icon: require("./assets/icons/drawer/screen-share.png"),
         subItems: null,
+        isExpanded: false,
     },
 ];
 

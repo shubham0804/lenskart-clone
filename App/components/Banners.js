@@ -1,25 +1,44 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import RippleImage from "./RippleImage";
+import * as Linking from "expo-linking";
 
-const LockdownNotice = () => (
-    <RippleImage
-        rippleColor="rgba(44,44,44,0.3)"
-        rippleStyle={styles.lockdownImagePressable}
-        imageSource={require("../assets/images/lockdown-service.png")}
-        imageStyle={styles.lockdownImage}
-    />
-);
+const LockdownNotice = () => {
+    var width = useWindowDimensions().width;
+    return (
+        <RippleImage
+            rippleColor="rgba(44,44,44,0.3)"
+            rippleStyle={[styles.extraWideTouchable, { width: wp(95) }]}
+            imageSource={require("../assets/images/lockdown-service.png")}
+            imageStyle={styles.extraWideImage}
+            onPress={() =>
+                Linking.openURL(
+                    "whatsapp://send/?phone=918929853854&text=Hi Lenskart, I want to buy glasses!"
+                )
+            }
+        />
+    );
+};
 
-const Generic = () => (
+const Generic = ({ navigation }) => (
     <View style={{ flex: 1 }}>
         {/* Lenskart Blu Banner */}
-        <View style={{ marginBottom: 5, marginTop: 10 }}>
+        <View style={{ marginBottom: 7, marginTop: 7 }}>
             <RippleImage
                 rippleColor="rgba(44,44,44,0.3)"
-                rippleStyle={styles.lBlueTouchable}
+                rippleStyle={styles.normalTouchable}
                 imageSource={require("../assets/images/banners/blue-shield.png")}
-                imageStyle={styles.lBlueImage}
+                imageStyle={styles.normalImage}
+                onPress={() => {
+                    navigation.navigate("VideoScreen", {
+                        title: "Forever BLU",
+                        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Lenskart%20BLU%20_%20Blue%20Block%20Lenses%20that%20Protect%20Your%20Eyes.mp4",
+                    });
+                }}
             />
         </View>
         {/* Share Location Banner */}
@@ -32,136 +51,158 @@ const Generic = () => (
         {/* Home Try */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.homeTryPressable}
             imageSource={require("../assets/images/banners/home-try.jpg")}
-            imageStyle={styles.homeTryImage}
+            rippleStyle={styles.extraWideTouchable}
+            imageStyle={styles.extraWideImage}
+            onPress={() => Linking.openURL("tel://18001026886")}
         />
         {/* Buy on Whatsapp */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.5)"
-            rippleStyle={styles.whatsappTouchable}
             imageSource={require("../assets/images/banners/buy-on-whatsapp.jpg")}
-            imageStyle={styles.whatsappImage}
+            rippleStyle={styles.extraWideTouchable}
+            imageStyle={styles.extraWideImage}
+            onPress={() =>
+                Linking.openURL(
+                    "whatsapp://send/?phone=918929853854&text=Hi Lenskart, I want to buy glasses!"
+                )
+            }
         />
         {/* Call 1800 */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.call1800Pressable}
             imageSource={require("../assets/images/banners/call-1800.jpg")}
-            imageStyle={styles.call1800Image}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
+            onPress={() => Linking.openURL("tel://1800111111")}
         />
         {/* Buy Online */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/buy-online.gif")}
-            imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
+            onPress={() => {
+                navigation.navigate("VideoScreen", {
+                    title: "How to Buy Glasses Online",
+                    url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Eyewear%20Online%20Shopping%20Guide.mp4",
+                });
+            }}
         />
         {/* Wear Blu */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/wear-blu.jpg")}
-            imageStyle={styles.buyOnlineImage}
+            // rippleStyle={styles.buyOnlinePressable}
+            // imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
         />
         {/* Air Flex Gif */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/air-flex-2.gif")}
-            imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
         />
         {/* Best Selling Sunglasses */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/best-selling.jpg")}
-            imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
         />
         {/* Prescription Glasses */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/prescription-glasses.png")}
-            imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
+            onPress={() =>
+                navigation.navigate("VideoScreen", {
+                    title: "",
+                    url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Everything%20You%20Need%20To%20Know%20About%20Prescription%20Eyeglasses.mp4",
+                })
+            }
         />
         {/* Spectacular */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={styles.buyOnlinePressable}
             imageSource={require("../assets/images/banners/spectacular.gif")}
-            imageStyle={styles.buyOnlineImage}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
         />
     </View>
 );
 
-const LenskartAssurance = () => (
-    <View style={{ flexDirection: "row", marginLeft: 10 }}>
+const LenskartAssurance = ({ navigation }) => (
+    <View
+        style={{
+            flexDirection: "row",
+            // backgroundColor: "blue",
+            marginHorizontal: 5,
+        }}
+    >
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
-            rippleStyle={{ marginRight: 10 }}
             imageSource={require("../assets/images/banners/made-by-robots.jpg")}
-            imageStyle={styles.bannerGrid}
+            // rippleStyle={{ marginRight: 10 }}
+            // rippleStyle={[styles.portraitTouchable, { marginRight: 5 }]}
+            rippleStyle={[styles.portraitTouchable]}
+            imageStyle={styles.portraitImage}
+            onPress={() =>
+                navigation.navigate("VideoScreen", {
+                    title: "",
+                    url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-by-robots.mp4",
+                })
+            }
         />
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
             imageSource={require("../assets/images/banners/made-with-precision.jpg")}
-            imageStyle={styles.bannerGrid}
+            rippleStyle={styles.portraitTouchable}
+            imageStyle={styles.portraitImage}
+            onPress={() =>
+                navigation.navigate("VideoScreen", {
+                    title: "",
+                    url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-with-precision.mp4",
+                })
+            }
         />
     </View>
 );
 
 const styles = StyleSheet.create({
-    homeTryPressable: {
-        width: "95%",
-        height: 85,
+    extraWideTouchable: {
+        width: wp(95),
+        // height: hp(12),
+        alignSelf: "center",
         // backgroundColor: "red",
-        alignItems: "center",
-        justifyContent: "center",
-        marginLeft: 10,
-        marginTop: 5,
-    },
-    homeTryImage: {
-        flex: 1,
-        resizeMode: "contain",
-        width: "100%",
-        borderRadius: 5,
-    },
-    lockdownImagePressable: {
-        width: "98%",
-        marginLeft: 10,
-        marginTop: 5,
-        marginBottom: -5,
+        marginTop: hp(1),
         flex: 1,
     },
-    lockdownImage: {
-        height: 85,
+    extraWideImage: {
+        aspectRatio: 4 / 1,
+        resizeMode: "cover",
+        // resizeMode: "contain",
+        height: undefined,
         width: "100%",
         flex: 1,
-        borderRadius: 9,
+        borderRadius: wp(2),
         alignSelf: "center",
     },
-    lBlueTouchable: {
-        height: 205,
-        width: "95%",
-        marginLeft: 10,
-    },
-    lBlueImage: {
+    normalTouchable: {
+        width: wp(95),
+        alignSelf: "center",
+        // justifyContent: "center",
         flex: 1,
-        width: "100%",
-        borderRadius: 5,
-        resizeMode: "contain",
+        marginVertical: 4,
     },
-    whatsappTouchable: {
-        width: "95%",
-        marginLeft: 10,
-        marginTop: 5,
-        height: 85,
-        justifyContent: "center",
-    },
-    whatsappImage: {
+    normalImage: {
         flex: 1,
-        resizeMode: "contain",
+        aspectRatio: 1.675,
+        // height: "100%",
+        height: undefined,
         width: "100%",
         borderRadius: 5,
     },
@@ -181,40 +222,24 @@ const styles = StyleSheet.create({
         // alignSelf: "center",
         borderRadius: 2,
     },
-    call1800Pressable: {
+    portraitTouchable: {
+        // backgroundColor: "green",
+        flex: 1,
         alignItems: "center",
-        height: 205,
-        justifyContent: "center",
-        marginTop: 5,
-        width: "95%",
-        marginLeft: 10,
     },
-    call1800Image: {
+    portraitImage: {
+        // backgroundColor: "red",
         flex: 1,
+        aspectRatio: 0.83,
+        // aspectRatio: 0.78,
+        width: wp(47),
+        // width: "95%",
+        // width: 165,
+        height: undefined,
+        // height: "100%",
+        // height: 200,
+        borderRadius: 5,
         resizeMode: "contain",
-        width: "100%",
-        borderRadius: 5,
-    },
-
-    buyOnlinePressable: {
-        width: "95%",
-        height: 205,
-        justifyContent: "center",
-        marginLeft: 10,
-        marginVertical: 5,
-    },
-    buyOnlineImage: {
-        resizeMode: "contain",
-        width: "100%",
-        flex: 1,
-        // height: null,
-        height: 205,
-        borderRadius: 5,
-    },
-    bannerGrid: {
-        width: 165,
-        height: 200,
-        borderRadius: 5,
     },
 });
 

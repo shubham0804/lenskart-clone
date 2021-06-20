@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, useWindowDimensions, Image } from "react-native";
 import { customerReviewSlideData } from "../../data";
 import RippleImage from "../RippleImage";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
-export default CustomerReviewSlide = () => {
+export default CustomerReviewSlide = ({ navigation }) => {
     const width = useWindowDimensions().width;
     const height = width * 0.6;
-
-    console.log(`Width: ${width}`);
-    console.log(`height: ${height}`);
 
     const [active, setActive] = useState(0);
 
@@ -28,12 +29,13 @@ export default CustomerReviewSlide = () => {
                 showsHorizontalScrollIndicator={false}
                 style={{ width, height }}
                 disableIntervalMomentum={true}
-                snapToInterval={340}
+                snapToInterval={wp(93.2)}
+                snapToInterval={wp(94.8)}
                 decelerationRate={0.7}
                 overScrollMode="never"
                 contentContainerStyle={{ marginHorizontal: 3 }}
             >
-                {customerReviewSlideData.map((image, index) => {
+                {customerReviewSlideData.map(({ image, url }, index) => {
                     if (index <= 5) {
                         return (
                             <View key={index}>
@@ -42,6 +44,12 @@ export default CustomerReviewSlide = () => {
                                     rippleStyle={styles.customerReviewPressable}
                                     imageSource={image}
                                     imageStyle={styles.customerReviewImage}
+                                    onPress={() => {
+                                        navigation.navigate("VideoScreen", {
+                                            title: "",
+                                            url: url,
+                                        });
+                                    }}
                                 />
                             </View>
                         );
@@ -52,7 +60,7 @@ export default CustomerReviewSlide = () => {
                                     rippleColor="rgba(44,44,44,0.3)"
                                     rippleStyle={[
                                         styles.customerReviewPressable,
-                                        { marginRight: 25 },
+                                        { marginRight: 23 },
                                     ]}
                                     imageSource={image}
                                     imageStyle={styles.customerReviewImage}
@@ -79,33 +87,42 @@ export default CustomerReviewSlide = () => {
 
 const styles = StyleSheet.create({
     customerReviewPressable: {
-        height: 200,
-        marginHorizontal: 5,
-        width: 330,
+        // backgroundColor: "red",
+        flex: 1,
+        // height: 200,
+        marginHorizontal: wp(1),
+        marginVertical: 5,
+        // marginHorizontal: 5,
+        // width: 330,
     },
     customerReviewImage: {
+        // backgroundColor: "green",
         flex: 1,
+        aspectRatio: 1.52,
+        aspectRatio: 1.62,
         width: "100%",
-        height: "100%",
-        resizeMode: "contain",
-        overflow: "hidden",
+        height: undefined,
+        // height: "100%",
+        resizeMode: "cover",
+        // resizeMode: "contain",
+        // overflow: "hidden",
     },
     pagination: {
         flexDirection: "row",
         position: "absolute",
-        bottom: 25,
+        bottom: hp(3),
         alignSelf: "center",
     },
     dot: {
         tintColor: "#688082",
-        marginHorizontal: 3,
-        width: 7,
-        height: 7,
+        marginHorizontal: wp(0.7),
+        width: wp(2),
+        height: wp(2),
     },
     activeDot: {
         tintColor: "#12C6BE",
-        marginHorizontal: 3,
-        width: 7,
-        height: 7,
+        marginHorizontal: wp(0.7),
+        width: wp(2),
+        height: wp(2),
     },
 });

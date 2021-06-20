@@ -4,43 +4,46 @@ import RippleImage from "./RippleImage";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const HeaderRight = () => (
-    <View style={styles.container}>
-        <RippleImage
-            rippleColor="rgba(255,255,255, 0.5)"
-            // rippleStyle={styles.lockdownImagePressable}
-            imageSource={require("../assets/icons/header/search.png")}
-            imageStyle={styles.icon}
-            rippleCentered={true}
-            rippleSize={40}
-        />
-        {/* <Image source={require("../assets/icons/header/search.png")} style={styles.icon} /> */}
-        <RippleImage
-            rippleColor="rgba(255,255,255, 0.5)"
-            // rippleStyle={styles.lockdownImagePressable}
-            imageSource={require("../assets/icons/header/wallet.png")}
-            imageStyle={styles.icon}
-            rippleCentered={true}
-            rippleSize={40}
-        />
-        <RippleImage
-            rippleColor="rgba(255,255,255, 0.5)"
-            // rippleStyle={styles.lockdownImagePressable}
-            imageSource={require("../assets/icons/header/favorite.png")}
-            imageStyle={styles.icon}
-            rippleCentered={true}
-            rippleSize={40}
-        />
-        <RippleImage
-            rippleColor="rgba(255,255,255, 0.5)"
-            // rippleStyle={styles.lockdownImagePressable}
-            imageSource={require("../assets/icons/header/cart.png")}
-            imageStyle={styles.icon}
-            rippleCentered={true}
-            rippleSize={40}
-        />
-    </View>
-);
+const HeaderRight = (navigation) => {
+    return (
+        <View style={styles.container}>
+            <RippleImage
+                rippleColor="rgba(255,255,255, 0.5)"
+                // rippleStyle={styles.lockdownImagePressable}
+                imageSource={require("../assets/icons/header/search.png")}
+                imageStyle={styles.icon}
+                rippleCentered={true}
+                rippleSize={40}
+                onPress={() => navigation.navigate("SearchScreen")}
+            />
+            {/* <Image source={require("../assets/icons/header/search.png")} style={styles.icon} /> */}
+            <RippleImage
+                rippleColor="rgba(255,255,255, 0.5)"
+                // rippleStyle={styles.lockdownImagePressable}
+                imageSource={require("../assets/icons/header/wallet.png")}
+                imageStyle={styles.icon}
+                rippleCentered={true}
+                rippleSize={40}
+            />
+            <RippleImage
+                rippleColor="rgba(255,255,255, 0.5)"
+                // rippleStyle={styles.lockdownImagePressable}
+                imageSource={require("../assets/icons/header/favorite.png")}
+                imageStyle={styles.icon}
+                rippleCentered={true}
+                rippleSize={40}
+            />
+            <RippleImage
+                rippleColor="rgba(255,255,255, 0.5)"
+                // rippleStyle={styles.lockdownImagePressable}
+                imageSource={require("../assets/icons/header/cart.png")}
+                imageStyle={styles.icon}
+                rippleCentered={true}
+                rippleSize={40}
+            />
+        </View>
+    );
+};
 
 const HeaderLeft = ({ navigation }) => (
     <Pressable onPress={() => navigation.openDrawer()}>

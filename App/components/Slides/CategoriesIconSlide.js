@@ -2,6 +2,10 @@ import React, { useState, useRef } from "react";
 import { StyleSheet, Text, View, ScrollView, Image, useWindowDimensions } from "react-native";
 import { categoriesIconSlideData } from "../../data";
 import { COLORS } from "../../constants/theme";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 import Ripple from "react-native-material-ripple";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -13,6 +17,8 @@ export default CategoriesIconSlide = () => {
 
     const change = ({ nativeEvent }) => {
         const slide = Math.floor(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        // console.log(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        // console.log(`Slide: ${slide}`);
         if (slide !== active) {
             setActive(slide);
         }
@@ -34,6 +40,7 @@ export default CategoriesIconSlide = () => {
             <View style={{ margin: 5 }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
                     {categoriesIconSlideData.map((category, id) => {
+                        // console.log(`Active: ${active}`);
                         return (
                             <Ripple
                                 rippleDuration={300}
@@ -51,6 +58,7 @@ export default CategoriesIconSlide = () => {
                                         x: width * id,
                                         animated: true,
                                     });
+                                    // console.log(width * id);
                                 }}
                             >
                                 <Text
@@ -74,7 +82,9 @@ export default CategoriesIconSlide = () => {
                 onScroll={change}
                 showsHorizontalScrollIndicator={false}
                 disableIntervalMomentum={true}
-                snapToInterval={360}
+                snapToInterval={wp(96)}
+                // snapToInterval={335}
+                // snapToInterval={390}
                 // decelerationRate="normal"
                 decelerationRate={0.8}
                 overScrollMode="never"
@@ -89,6 +99,7 @@ export default CategoriesIconSlide = () => {
                                     rippleOpacity={0.5}
                                     rippleFades={false}
                                     rippleColor="#c0c0c0"
+                                    style={styles.categoriesIconContainer}
                                 >
                                     <Image source={icons[0]} style={styles.categoriesIcon} />
                                 </Ripple>
@@ -97,6 +108,7 @@ export default CategoriesIconSlide = () => {
                                     rippleOpacity={0.5}
                                     rippleFades={false}
                                     rippleColor="#c0c0c0"
+                                    style={styles.categoriesIconContainer}
                                 >
                                     <Image source={icons[1]} style={styles.categoriesIcon} />
                                 </Ripple>
@@ -105,6 +117,7 @@ export default CategoriesIconSlide = () => {
                                     rippleOpacity={0.5}
                                     rippleFades={false}
                                     rippleColor="#c0c0c0"
+                                    style={styles.categoriesIconContainer}
                                 >
                                     <Image source={icons[2]} style={styles.categoriesIcon} />
                                 </Ripple>
@@ -115,7 +128,10 @@ export default CategoriesIconSlide = () => {
                             <React.Fragment key={index.toString()}>
                                 <Image source={icons[0]} style={styles.categoriesIcon} />
                                 <Image source={icons[1]} style={styles.categoriesIcon} />
-                                <Image source={icons[2]} style={styles.categoriesIcon} />
+                                <Image
+                                    source={icons[2]}
+                                    style={[styles.categoriesIcon, { marginRight: wp(8) }]}
+                                />
                             </React.Fragment>
                         );
                     }
@@ -134,9 +150,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     categoriesIconsLabelBox: {
-        marginTop: 5,
-        width: 100,
-        height: 40,
+        // marginTop: 5,
+        marginTop: hp(0.7),
+        width: wp(29),
+        // width: 100,
+        height: hp(5.7),
+        // height: 40,
         borderWidth: 1,
         borderColor: "black",
         borderRadius: 8,
@@ -144,9 +163,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     categoriesIconsLabelBoxActive: {
-        marginTop: 5,
-        width: 100,
-        height: 40,
+        // marginTop: 5,
+        marginTop: hp(0.7),
+        // width: 100,
+        width: wp(29),
+        // height: 40,
+        height: hp(5.7),
         borderRadius: 8,
         alignItems: "center",
         justifyContent: "center",
@@ -160,10 +182,25 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: RFValue(15),
     },
+    categoriesIconContainer: {
+        flex: 1,
+        // justifyContent: "center",
+        // width: wp(100),
+    },
     categoriesIcon: {
-        width: 80,
-        height: 80,
-        margin: 8,
-        marginHorizontal: 18,
+        // backgroundColor: "red",
+        height: undefined,
+        width: wp(24),
+        // width: 200,
+        flex: 1,
+        aspectRatio: 1,
+        // width: 80,
+        // height: 80,
+        // margin: 8,
+        margin: hp(1.1),
+        // marginHorizontal: 13,
+        marginHorizontal: wp(4),
+        resizeMode: "contain",
+        // alignSelf: "center",
     },
 });

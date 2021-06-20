@@ -1,13 +1,104 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, ImageBackground, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ImageBackground,
+    Pressable,
+    LayoutAnimation,
+} from "react-native";
 
-import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { drawerItems } from "../data";
 
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
+
 export default function DrawerContent(props) {
+    const [drawerItemsData, setDrawerItemsData] = useState(drawerItems);
+
+    const updateLayout = (index) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        const array = [...drawerItemsData];
+        array.map((value, placeIndex) =>
+            placeIndex === index
+                ? (array[placeIndex]["isExpanded"] = !array[placeIndex]["isExpanded"])
+                : (array[placeIndex]["isExpanded"] = false)
+        );
+        setDrawerItemsData(array);
+    };
+
+    const ExpandableComponent = ({ keyToUse, item, onClickFunction }) => {
+        const [layoutHeight, setLayoutHeight] = useState(0);
+
+        useEffect(() => {
+            if (item.isExpanded) {
+                setLayoutHeight(null);
+            } else {
+                setLayoutHeight(0);
+            }
+        }, [item.isExpanded]);
+
+        return (
+            <View key={keyToUse}>
+                <Pressable
+                    android_ripple={{
+                        color: "#d3d3d3",
+                    }}
+                    style={
+                        !item.isExpanded
+                            ? styles.drawerItemContainer
+                            : [
+                                  styles.drawerItemContainer,
+                                  {
+                                      backgroundColor: "#F7F8FA",
+                                      marginHorizontal: 0,
+                                      marginBottom: 0,
+                                  },
+                              ]
+                    }
+                    onPress={onClickFunction}
+                >
+                    <Image source={item.icon} style={styles.drawerItemIcon} resizeMode="contain" />
+                    <Text style={[styles.drawerItemName, { flex: 1 }]}>{item.itemName}</Text>
+                    <MaterialCommunityIcons
+                        name="chevron-down"
+                        size={20}
+                        color="black"
+                        style={{ alignSelf: "center" }}
+                    />
+                </Pressable>
+                <View
+                    style={{
+                        height: layoutHeight,
+                        overflow: "hidden",
+                        backgroundColor: "#F7F8FA",
+                    }}
+                >
+                    {item.subItems.map((item, key) => (
+                        <Pressable
+                            key={key}
+                            style={styles.drawerItemContainer}
+                            android_ripple={{
+                                color: "#d3d3d3",
+                            }}
+                        >
+                            <Text style={styles.text}>{item.name}</Text>
+                            {/* Separator */}
+                        </Pressable>
+                    ))}
+                </View>
+            </View>
+        );
+    };
+
     return (
-        <View style={{ flex: 1, backgroundColor: "#F7F8FA" }}>
+        <View style={{ flex: 1 }}>
             {/* Header */}
             <View style={styles.header}>
                 {/* Header Background */}
@@ -32,6 +123,9 @@ export default function DrawerContent(props) {
                             <Pressable
                                 style={styles.myAccountButton}
                                 onPress={() => alert("My Account")}
+                                android_ripple={{
+                                    color: "#d3d3d3",
+                                }}
                             >
                                 <Text style={{ color: "white", fontWeight: "bold" }}>
                                     MY ACCOUNT
@@ -44,14 +138,19 @@ export default function DrawerContent(props) {
                                 style={{
                                     color: "white",
                                     fontWeight: "bold",
-                                    fontSize: 20,
-                                    marginTop: -15,
-                                    marginBottom: 5,
+                                    fontSize: RFValue(20),
+                                    paddingVertical: 5,
                                 }}
                             >
                                 Hi Specsy!
                             </Text>
-                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>
+                            <Text
+                                style={{
+                                    color: "white",
+                                    fontWeight: "bold",
+                                    fontSize: RFValue(14),
+                                }}
+                            >
                                 Sign in to use your saved prescription and track your orders.
                             </Text>
                         </View>
@@ -63,36 +162,45 @@ export default function DrawerContent(props) {
                 {...props}
                 showsVerticalScrollIndicator={false}
                 overScrollMode="never"
-                // style={{ flex: 2 }}
             >
                 <View style={styles.drawerContent}>
-                    {drawerItems.map((item, index) => {
-                        return (
-                            // Drawer Item Container
-                            <Pressable
-                                style={styles.drawerItemContainer}
-                                key={index.toString()}
-                                android_ripple={{
-                                    color: "#d3d3d3",
-                                }}
-                            >
-                                {/* Drawer Item Icon */}
-                                <Image
-                                    source={item.icon}
-                                    style={styles.drawerItemIcon}
-                                    resizeMode="contain"
-                                />
-                                <Text style={styles.drawerItemName}>{item.itemName}</Text>
-                                {item.subItems && (
-                                    <MaterialCommunityIcons
-                                        name="chevron-down"
-                                        size={20}
-                                        color="black"
-                                        style={{ alignSelf: "center" }}
+                    {drawerItemsData.map((item, index) => {
+                        if (!item.subItems) {
+                            return (
+                                // Drawer Item Container
+                                <Pressable
+                                    style={styles.drawerItemContainer}
+                                    key={index.toString()}
+                                    android_ripple={{
+                                        color: "#d3d3d3",
+                                    }}
+                                    onPress={() => {
+                                        item.onPress &&
+                                            item.onPress.type === "navigation" &&
+                                            props.navigation.navigate(item.onPress.value);
+                                    }}
+                                >
+                                    {/* Drawer Item Icon */}
+                                    <Image
+                                        source={item.icon}
+                                        style={styles.drawerItemIcon}
+                                        resizeMode="contain"
                                     />
-                                )}
-                            </Pressable>
-                        );
+                                    <Text style={styles.drawerItemName}>{item.itemName}</Text>
+                                </Pressable>
+                            );
+                        } else {
+                            return (
+                                <ExpandableComponent
+                                    keyToUse={item.itemName}
+                                    key={item.itemName}
+                                    item={item}
+                                    onClickFunction={() => {
+                                        updateLayout(index);
+                                    }}
+                                />
+                            );
+                        }
                     })}
                 </View>
             </DrawerContentScrollView>
@@ -106,57 +214,61 @@ export default function DrawerContent(props) {
 }
 
 const styles = StyleSheet.create({
+    avatarSection: {
+        flex: 1.3,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: hp(1.5),
+    },
     avatar: {
         backgroundColor: "white",
         alignItems: "center",
         justifyContent: "center",
-        width: 62,
-        height: 62,
-        borderRadius: 31,
+        width: wp(17.5),
+        height: wp(17.5),
+        borderRadius: wp(13.75),
         overflow: "hidden",
         borderColor: "#0B66AB",
         borderWidth: 2,
     },
     avatarImage: {
-        width: 62,
-        height: 62,
+        // width: 62,
+        width: "100%",
+        // height: 62,
+        height: "100%",
     },
-    avatarSection: {
-        // backgroundColor: "green",
-        flex: 1.3,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: -10,
-    },
+
     drawerContent: {
-        marginTop: -30,
+        // marginTop: -30,
+        marginTop: hp(-4),
         backgroundColor: "white",
+        // backgroundColor: "red",
         // flex: 1,
     },
     drawerItemContainer: {
         flexDirection: "row",
         flex: 1,
-        padding: 10,
-        marginHorizontal: 10,
+        padding: wp(2.8),
+        marginHorizontal: wp(2.8),
         marginVertical: 3,
     },
     drawerItemIcon: {
-        width: 25,
-        height: 23,
+        width: wp(7),
+        height: wp(6.4),
         tintColor: "#484848",
     },
     drawerItemName: {
-        marginLeft: 25,
+        marginLeft: wp(7),
         flex: 1,
     },
     greetingTextSction: {
         flex: 2,
-        // alignItems: "center",
         justifyContent: "center",
-        marginLeft: 10,
+        marginLeft: wp(3),
     },
     header: {
-        height: 199,
+        aspectRatio: 1.75,
+        height: undefined,
         width: "100%",
     },
     footer: {
@@ -165,13 +277,12 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: "#F5F9FA",
         width: "100%",
-        height: 47,
+        height: hp(6.5),
         alignItems: "center",
-        paddingLeft: 5,
+        paddingLeft: wp(1.5),
     },
     footerText: {
-        padding: 10,
-        // fontSize: 15,
+        padding: wp(2.8),
         fontWeight: "900",
     },
     image: {
@@ -179,18 +290,26 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     myAccountButton: {
-        width: 120,
-        height: 30,
-        borderRadius: 6,
+        width: wp(31),
+        height: hp(4.3),
+        borderRadius: wp(1.7),
         backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 15,
-        marginBottom: -45,
+        marginTop: hp(2),
+        marginBottom: hp(-6),
     },
     overlay: {
         flex: 1,
         backgroundColor: "rgba(0,0,0,0.15)",
         flexDirection: "row",
+    },
+    content: {
+        paddingLeft: wp(2.8),
+        paddingRight: wp(2.8),
+        backgroundColor: "#fff",
+    },
+    text: {
+        marginLeft: wp(14),
     },
 });
