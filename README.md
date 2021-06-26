@@ -1,6 +1,7 @@
 # Lenskart UI Clone in React Native
-
+<img src="https://storage.googleapis.com/lenskart-rn-ui/expo.png"  height="200"><br>
 [View in Expo](https://expo.io/@shubham0804/Lenskart-Clone)
+
 
 ## Screens
 
