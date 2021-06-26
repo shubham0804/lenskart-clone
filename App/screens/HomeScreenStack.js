@@ -13,6 +13,7 @@ import { LockdownNotice, Generic, LenskartAssurance } from "../components/Banner
 import Footer from "../components/Footer";
 import VideoScreen from "./VideoScreen";
 import SearchScreen from "./SearchScreen";
+import CartScreen from "./EmptyCartScreen";
 import SearchBar from "../components/SearchBar";
 import {
     widthPercentageToDP as wp,
@@ -44,7 +45,7 @@ export default function HomeScreenStack({ navigation }) {
                         shadowOpacity: 0,
                     },
                     headerTitle: "",
-                    headerRight: () => <HeaderRight {...navigation} />,
+                    headerRight: () => <HeaderRight navigation={navigation} />,
                     headerLeft: () => <HeaderLeft navigation={navigation} />,
                 }}
             />
@@ -71,6 +72,17 @@ export default function HomeScreenStack({ navigation }) {
                     ),
                     headerTintColor: "white",
                     headerTitle: (props) => <SearchBar />,
+                }}
+            />
+            <Stack.Screen
+                name="CartScreen"
+                component={CartScreen}
+                options={{
+                    headerLeft: (props) => (
+                        <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
+                    ),
+                    headerTintColor: "white",
+                    headerTitle: "Cart",
                 }}
             />
         </Stack.Navigator>
