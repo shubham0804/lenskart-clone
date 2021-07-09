@@ -4,7 +4,7 @@ import RippleImage from "./RippleImage";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const HeaderRight = ({ navigation }) => {
+const HeaderRight = ({ navigation, wallet }) => {
     return (
         <View style={styles.container}>
             {/* Search */}
@@ -17,13 +17,15 @@ const HeaderRight = ({ navigation }) => {
                 onPress={() => navigation.navigate("SearchScreen")}
             />
             {/* Wallet */}
-            <RippleImage
-                rippleColor="rgba(255,255,255, 0.5)"
-                imageSource={require("../assets/icons/header/wallet.png")}
-                imageStyle={styles.icon}
-                rippleCentered={true}
-                rippleSize={40}
-            />
+            {wallet && (
+                <RippleImage
+                    rippleColor="rgba(255,255,255, 0.5)"
+                    imageSource={require("../assets/icons/header/wallet.png")}
+                    imageStyle={styles.icon}
+                    rippleCentered={true}
+                    rippleSize={40}
+                />
+            )}
             {/* Favorites */}
             <RippleImage
                 rippleColor="rgba(255,255,255, 0.5)"

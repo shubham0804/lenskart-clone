@@ -3,6 +3,9 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "../screens/DrawerContent";
 import HomeScreenStack from "../screens/HomeScreenStack";
+import CategoryListScreen from "../screens/CategoryListScreen";
+import { HeaderBackButton } from "@react-navigation/stack";
+import { HeaderRight } from "../components/Header";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,6 +24,18 @@ const MainDrawerNavigator = () => {
                 name="HomeScreen"
                 component={HomeScreenStack}
                 options={({ route }) => ({ swipeEnabled: isSwipeEnabled(route) })}
+            />
+            <Drawer.Screen
+                name="CategoryListScreen"
+                component={CategoryListScreen}
+                options={{
+                    headerLeft: (props) => (
+                        <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
+                    ),
+                    headerRight: () => <HeaderRight navigation={navigation} wallet={false} />,
+                    headerTintColor: "white",
+                    headerTitle: "Pass Cat. Name",
+                }}
             />
         </Drawer.Navigator>
     );

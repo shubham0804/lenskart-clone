@@ -1,19 +1,37 @@
-import React from "react";
-import { ScrollView, StyleSheet, View, StatusBar, Text, useWindowDimensions } from "react-native";
+// require("dotenv").config();
+import React, { useEffect, useState } from "react";
+import {
+    ScrollView,
+    StyleSheet,
+    View,
+    StatusBar,
+    Text,
+    useWindowDimensions,
+    ActivityIndicator,
+} from "react-native";
 import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
 import { COLORS } from "../constants/theme";
 import { HeaderLeft, HeaderRight } from "../components/Header";
 import {
     PromoSlide,
-    IconSlide,
-    CustomerReviewSlide,
+    BannerMini,
+    BannerPager,
     CategoriesIconSlide,
+    CategoryGrid,
 } from "../components/Slides/index";
-import { LockdownNotice, Generic, LenskartAssurance } from "../components/Banners";
+import {
+    LockdownNotice,
+    Generic,
+    LenskartAssurance,
+    Banner,
+    BannerGrid,
+    StoreLocator,
+} from "../components/Banners";
 import Footer from "../components/Footer";
 import VideoScreen from "./VideoScreen";
 import SearchScreen from "./SearchScreen";
 import CartScreen from "./EmptyCartScreen";
+import CategoryListScreen from "./CategoryListScreen";
 import SearchBar from "../components/SearchBar";
 import {
     widthPercentageToDP as wp,
@@ -33,11 +51,11 @@ export default function HomeScreenStack({ navigation }) {
                 },
                 headerTintColor: "white",
             }}
-            // initialRouteName="SearchScreen"
+            // initialRouteName="CategoryListScreen"
         >
             <Stack.Screen
                 name="Home"
-                component={HomeScreen}
+                component={HomeScreen2}
                 options={{
                     headerStyle: {
                         backgroundColor: COLORS.primary,
@@ -45,7 +63,7 @@ export default function HomeScreenStack({ navigation }) {
                         shadowOpacity: 0,
                     },
                     headerTitle: "",
-                    headerRight: () => <HeaderRight navigation={navigation} />,
+                    headerRight: () => <HeaderRight navigation={navigation} wallet={true} />,
                     headerLeft: () => <HeaderLeft navigation={navigation} />,
                 }}
             />
@@ -83,6 +101,18 @@ export default function HomeScreenStack({ navigation }) {
                     ),
                     headerTintColor: "white",
                     headerTitle: "Cart",
+                }}
+            />
+            <Stack.Screen
+                name="CategoryListScreen"
+                component={CategoryListScreen}
+                options={{
+                    headerLeft: (props) => (
+                        <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
+                    ),
+                    headerRight: () => <HeaderRight navigation={navigation} wallet={false} />,
+                    headerTintColor: "white",
+                    headerTitle: "Pass Cat. Name",
                 }}
             />
         </Stack.Navigator>
@@ -146,6 +176,102 @@ const HomeScreen = ({ navigation }) => {
                 {/* Footer */}
                 <Footer />
             </ScrollView>
+        </View>
+    );
+};
+
+const HomeScreen2 = ({ navigation }) => {
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const renderData = () => {
+        return data.map((element, key) => {
+            switch (element.dataType) {
+                case "TYPE_BANNER_MINI":
+                    // console.log(element);
+                    // return <Text key={key}>Banner Mini</Text>;
+                    return <BannerMini key={key.toString()} data={element.data} />;
+                    break;
+                case "TYPE_BANNER":
+                    // return <Text key={key}>Banner</Text>;
+                    return <Banner key={key.toString()} data={element.data} />;
+                    break;
+                case "TYPE_BANNER_PAGER":
+                    // return <Text key={key}>Banner Pager</Text>;
+                    return (
+                        <BannerPager
+                            data={element.data}
+                            key={key.toString()}
+                            navigation={navigation}
+                        />
+                    );
+                    break;
+                case "TYPE_CATEGORY_GRID":
+                    // return <Text key={key}>Category Grid</Text>;
+                    return <CategoryGrid data={element.data} key={key.toString()} />;
+                    break;
+                case "TYPE_STORE_LOCATOR":
+                    // console.log("store locator banner");
+                    // return <Text key={key}>store locator</Text>;
+                    return (
+                        <StoreLocator data={element.metadata} keyId={key.toString()} key={key} />
+                    );
+                    break;
+                case "TYPE_BANNER_GRID":
+                    // return <Text key={key.toString()}>Banner Grid</Text>;
+                    return <BannerGrid key={key.toString()} data={element.data} />;
+                    break;
+                default:
+                    // return <Text key={key.toString()}>Unknown entity</Text>;
+                    break;
+            }
+        });
+    };
+
+    const homeApi = `https://area51.lenskart.io/api/v1/collection/home?offset=0&pagesize=40&personaId=ar_support_repeat_android`;
+    const getData = async () => {
+        try {
+            let response = await fetch(homeApi);
+            if (response && typeof response === "object") {
+                response = await response.json();
+                if (response.result && response.result.length > 1) {
+                    // setData(filterData(response.result));
+                    setData(response.result);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return (
+        <View style={{ flex: 1 }}>
+            {data.length > 0 && (
+                <ScrollView
+                    style={{ backgroundColor: "#f2f2f2" }}
+                    overScrollMode="never"
+                    // contentContainerStyle={{ marginHorizontal: 7 }}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {/* <View
+                        style={{ width: "100%", height: hp(8), backgroundColor: COLORS.primary }}
+                    /> */}
+
+                    {renderData()}
+                    <Footer />
+                </ScrollView>
+            )}
+            {isLoading && (
+                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    <ActivityIndicator size="large" color={COLORS.secondary} />
+                </View>
+            )}
         </View>
     );
 };

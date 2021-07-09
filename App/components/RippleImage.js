@@ -11,10 +11,16 @@ const RippleImage = ({
     rippleCentered = false,
     rippleSize,
     onPress,
+    keyId,
 }) => {
-    // console.log(rippleColor);
+    let uniqueKey;
+    if (keyId) {
+        uniqueKey = keyId.toString();
+    }
     return (
+        // <React.Fragment key={uniqueKey}>
         <Ripple
+            // key={uniqueKey}
             rippleDuration={250}
             rippleOpacity={0.5}
             rippleFades={false}
@@ -31,6 +37,7 @@ const RippleImage = ({
         >
             <Image source={imageSource} style={imageStyle} resizeMode="contain" />
         </Ripple>
+        // </React.Fragment>
     );
 };
 

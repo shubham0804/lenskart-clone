@@ -10,7 +10,8 @@ import {
 import Ripple from "react-native-material-ripple";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export default CategoriesIconSlide = () => {
+export default CategoryGrid = ({ data, keyId }) => {
+    // console.log(data);
     const width = useWindowDimensions().width;
 
     const [active, setActive] = useState(0);
@@ -24,12 +25,13 @@ export default CategoriesIconSlide = () => {
         }
     };
 
-    let categoriesIconData = categoriesIconSlideData.map((category) => category.categories);
+    let categoriesIconData = data.map((category) => category.categories);
     categoriesIconData = categoriesIconData.flat();
     const chunkSize = 3;
     categoriesIconData = [...Array(Math.ceil(categoriesIconData.length / chunkSize))].map((_) =>
         categoriesIconData.splice(0, chunkSize)
     );
+    // console.log(categoriesIconData);
 
     const scrollViewRef = useRef(null);
 
@@ -101,7 +103,10 @@ export default CategoriesIconSlide = () => {
                                     rippleColor="#c0c0c0"
                                     style={styles.categoriesIconContainer}
                                 >
-                                    <Image source={icons[0]} style={styles.categoriesIcon} />
+                                    <Image
+                                        source={{ uri: icons[0].imageUrl }}
+                                        style={styles.categoriesIcon}
+                                    />
                                 </Ripple>
                                 <Ripple
                                     rippleDuration={300}
@@ -110,7 +115,10 @@ export default CategoriesIconSlide = () => {
                                     rippleColor="#c0c0c0"
                                     style={styles.categoriesIconContainer}
                                 >
-                                    <Image source={icons[1]} style={styles.categoriesIcon} />
+                                    <Image
+                                        source={{ uri: icons[1].imageUrl }}
+                                        style={styles.categoriesIcon}
+                                    />
                                 </Ripple>
                                 <Ripple
                                     rippleDuration={300}
@@ -119,17 +127,26 @@ export default CategoriesIconSlide = () => {
                                     rippleColor="#c0c0c0"
                                     style={styles.categoriesIconContainer}
                                 >
-                                    <Image source={icons[2]} style={styles.categoriesIcon} />
+                                    <Image
+                                        source={{ uri: icons[2].imageUrl }}
+                                        style={styles.categoriesIcon}
+                                    />
                                 </Ripple>
                             </View>
                         );
                     } else {
                         return (
                             <React.Fragment key={index.toString()}>
-                                <Image source={icons[0]} style={styles.categoriesIcon} />
-                                <Image source={icons[1]} style={styles.categoriesIcon} />
                                 <Image
-                                    source={icons[2]}
+                                    source={{ uri: icons[0].imageUrl }}
+                                    style={styles.categoriesIcon}
+                                />
+                                <Image
+                                    source={{ uri: icons[1].imageUrl }}
+                                    style={styles.categoriesIcon}
+                                />
+                                <Image
+                                    source={{ uri: icons[2].imageUrl }}
                                     style={[styles.categoriesIcon, { marginRight: wp(8) }]}
                                 />
                             </React.Fragment>
@@ -143,14 +160,12 @@ export default CategoriesIconSlide = () => {
 
 const styles = StyleSheet.create({
     categoriesContainer: {
-        marginBottom: -5,
         flex: 1,
         backgroundColor: "white",
         margin: 10,
         borderRadius: 5,
     },
     categoriesIconsLabelBox: {
-        // marginTop: 5,
         marginTop: hp(0.7),
         width: wp(29),
         // width: 100,

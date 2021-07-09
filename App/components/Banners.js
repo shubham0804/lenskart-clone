@@ -1,11 +1,129 @@
 import React from "react";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { StyleSheet, View, useWindowDimensions, Text } from "react-native";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import RippleImage from "./RippleImage";
 import * as Linking from "expo-linking";
+
+const ExtraWideBanner = ({ data, keyId }) => {
+    return (
+        <RippleImage
+            keyId={keyId}
+            rippleColor="rgba(44,44,44,0.3)"
+            rippleStyle={[styles.extraWideTouchable, { width: wp(95), marginVertical: 3 }]}
+            imageSource={{ uri: data.imageUrl }}
+            imageStyle={styles.extraWideImage}
+            // onPress={() =>
+            //     Linking.openURL(
+            //         "whatsapp://send/?phone=918929853854&text=Hi Lenskart, I want to buy glasses!"
+            //     )
+            // }
+        />
+    );
+};
+
+const WideBanner = ({ data, keyId }) => {
+    return (
+        <RippleImage
+            keyId={keyId}
+            rippleColor="rgba(44,44,44,0.3)"
+            imageSource={{ uri: data.imageUrl }}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
+        />
+    );
+};
+
+const NormalBanner = ({ data, keyId }) => {
+    return (
+        <RippleImage
+            keyId={keyId}
+            rippleColor="rgba(44,44,44,0.3)"
+            imageSource={{ uri: data.imageUrl }}
+            rippleStyle={styles.normalTouchable}
+            imageStyle={styles.normalImage}
+            // onPress={() => {
+            //     navigation.navigate("VideoScreen", {
+            //         title: "How to Buy Glasses Online",
+            //         url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Eyewear%20Online%20Shopping%20Guide.mp4",
+            //     });
+            // }}
+        />
+    );
+};
+
+export const BannerGrid = ({ data, navigation }) => {
+    return (
+        <View
+            style={{
+                flexDirection: "row",
+                // backgroundColor: "blue",
+                marginHorizontal: 5,
+            }}
+        >
+            <RippleImage
+                rippleColor="rgba(44,44,44,0.3)"
+                imageSource={{ uri: data[0].imageUrl }}
+                // imageSource={require("../assets/images/banners/made-by-robots.jpg")}
+                // rippleStyle={{ marginRight: 10 }}
+                // rippleStyle={[styles.portraitTouchable, { marginRight: 5 }]}
+                rippleStyle={[styles.portraitTouchable]}
+                imageStyle={styles.portraitImage}
+                onPress={() =>
+                    navigation.navigate("VideoScreen", {
+                        title: "",
+                        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-by-robots.mp4",
+                    })
+                }
+            />
+            <RippleImage
+                rippleColor="rgba(44,44,44,0.3)"
+                imageSource={{ uri: data[1].imageUrl }}
+                // imageSource={require("../assets/images/banners/made-with-precision.jpg")}
+                rippleStyle={styles.portraitTouchable}
+                imageStyle={styles.portraitImage}
+                onPress={() =>
+                    navigation.navigate("VideoScreen", {
+                        title: "",
+                        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-with-precision.mp4",
+                    })
+                }
+            />
+        </View>
+    );
+};
+
+const StoreLocator = ({ data, keyId }) => {
+    const imageUrl = data.placeHolderImageUrl;
+    return (
+        // <React.Fragment key={keyId}>
+        <RippleImage
+            rippleColor="rgba(44,44,44,0.3)"
+            rippleStyle={styles.shareLocationTouchable}
+            imageSource={{ uri: imageUrl }}
+            imageStyle={styles.shareLocationImage}
+            keyId={keyId}
+        />
+        // </React.Fragment>
+    );
+};
+
+const Banner = ({ data, keyId }) => {
+    // console.log(data);
+    // return <Text>Banner</Text>;
+    switch (data.aspectRatio) {
+        case "EXTRA_WIDE":
+            return <ExtraWideBanner data={data} keyId={keyId} />;
+        case "WIDE":
+            return <WideBanner data={data} keyId={keyId} />;
+        case "NORMAL":
+            return <NormalBanner data={data} keyId={keyId} />;
+        default:
+            return <Text key={keyId.toString()}>Unknown Banner Sizes</Text>;
+    }
+};
 
 const LockdownNotice = () => {
     var width = useWindowDimensions().width;
@@ -41,7 +159,7 @@ const Generic = ({ navigation }) => (
                 }}
             />
         </View>
-        {/* Share Location Banner */}
+        {/* Store Locator Banner */}
         <RippleImage
             rippleColor="rgba(44,44,44,0.3)"
             rippleStyle={styles.shareLocationTouchable}
@@ -209,18 +327,20 @@ const styles = StyleSheet.create({
     shareLocationTouchable: {
         // marginTop: 10,
         backgroundColor: "white",
-        width: "95%",
+        width: wp(95),
         alignSelf: "center",
         borderRadius: 5,
-        height: 110,
-        alignItems: "center",
+        // height: 110,
+        // alignItems: "center",
     },
     shareLocationImage: {
-        marginTop: -25,
+        // marginTop: -25,
         resizeMode: "contain",
-        aspectRatio: 1.95,
+        aspectRatio: 4,
         // alignSelf: "center",
-        borderRadius: 2,
+        borderRadius: 5,
+        height: undefined,
+        width: "100%",
     },
     portraitTouchable: {
         // backgroundColor: "green",
@@ -243,4 +363,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export { LockdownNotice, Generic, LenskartAssurance };
+export { LockdownNotice, Generic, LenskartAssurance, Banner, StoreLocator };

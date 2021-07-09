@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, useWindowDimensions, Image } from "react-native";
-import { customerReviewSlideData } from "../../data";
 import RippleImage from "../RippleImage";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { aspectRatio } from "../../constants/theme";
 
-export default CustomerReviewSlide = ({ navigation }) => {
+export default BannerPager = ({ navigation, data, keyId }) => {
     const width = useWindowDimensions().width;
     const height = width * 0.6;
 
@@ -20,8 +20,10 @@ export default CustomerReviewSlide = ({ navigation }) => {
         }
     };
 
+    // return <Text>Testing 123</Text>;
+
     return (
-        <View>
+        <View key={keyId} style={{ marginVertical: 2 }}>
             <ScrollView
                 pagingEnabled
                 horizontal
@@ -35,21 +37,28 @@ export default CustomerReviewSlide = ({ navigation }) => {
                 overScrollMode="never"
                 contentContainerStyle={{ marginHorizontal: 3 }}
             >
-                {customerReviewSlideData.map(({ image, url }, index) => {
+                {data.map(({ imageUrl }, index) => {
                     if (index <= 5) {
                         return (
                             <View key={index}>
                                 <RippleImage
                                     rippleColor="rgba(44,44,44,0.3)"
-                                    rippleStyle={styles.customerReviewPressable}
-                                    imageSource={image}
+                                    rippleStyle={
+                                        data.length > 1
+                                            ? styles.customerReviewPressable
+                                            : [
+                                                  styles.customerReviewPressable,
+                                                  { marginHorizontal: 5 },
+                                              ]
+                                    }
+                                    imageSource={{ uri: imageUrl }}
                                     imageStyle={styles.customerReviewImage}
-                                    onPress={() => {
-                                        navigation.navigate("VideoScreen", {
-                                            title: "",
-                                            url: url,
-                                        });
-                                    }}
+                                    // onPress={() => {
+                                    //     navigation.navigate("VideoScreen", {
+                                    //         title: "",
+                                    //         url: url,
+                                    //     });
+                                    // }}
                                 />
                             </View>
                         );
@@ -62,7 +71,7 @@ export default CustomerReviewSlide = ({ navigation }) => {
                                         styles.customerReviewPressable,
                                         { marginRight: 23 },
                                     ]}
-                                    imageSource={image}
+                                    imageSource={{ uri: imageUrl }}
                                     imageStyle={styles.customerReviewImage}
                                 />
                             </View>
@@ -71,16 +80,26 @@ export default CustomerReviewSlide = ({ navigation }) => {
                 })}
             </ScrollView>
             <View style={styles.pagination}>
-                {customerReviewSlideData.map((image, id) => {
-                    return (
-                        <Image
-                            source={require("../../assets/images/sliders/indicator-dot.png")}
-                            key={id}
-                            style={id == active ? styles.activeDot : styles.dot}
-                        />
-                    );
+                {data.map((image, id) => {
+                    if (data.length > 1) {
+                        return (
+                            <Image
+                                source={require("../../assets/images/sliders/indicator-dot.png")}
+                                key={id}
+                                style={id == active ? styles.activeDot : styles.dot}
+                            />
+                        );
+                    }
                 })}
             </View>
+        </View>
+    );
+};
+
+export const SingleBannerPager = ({ imageUrl }) => {
+    return (
+        <View style={styles.singleBannerContainer}>
+            <Image source={{ uri: imageUrl }} style={styles.singleBannerImage} />
         </View>
     );
 };
@@ -89,11 +108,8 @@ const styles = StyleSheet.create({
     customerReviewPressable: {
         // backgroundColor: "red",
         flex: 1,
-        // height: 200,
         marginHorizontal: wp(1),
         marginVertical: 5,
-        // marginHorizontal: 5,
-        // width: 330,
     },
     customerReviewImage: {
         // backgroundColor: "green",
@@ -124,5 +140,15 @@ const styles = StyleSheet.create({
         marginHorizontal: wp(0.7),
         width: wp(2),
         height: wp(2),
+    },
+    singleBannerContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 3,
+    },
+    singleBannerImage: {
+        width: "95%",
+        borderRadius: 5,
+        aspectRatio: aspectRatio.EXTRA_WIDE,
     },
 });

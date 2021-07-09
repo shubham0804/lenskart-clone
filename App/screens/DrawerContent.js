@@ -22,6 +22,21 @@ import { RFValue } from "react-native-responsive-fontsize";
 export default function DrawerContent(props) {
     const [drawerItemsData, setDrawerItemsData] = useState(drawerItems);
 
+    const handleOnPress = (item) => {
+        if (item.onPress) {
+            switch (item.onPress.type) {
+                case "navigation":
+                    props.navigation.navigate(item.onPress.value);
+                    break;
+                case "category":
+                    props.navigation.navigate("CategoryListScreen", {
+                        categoryId: item.onPress.value,
+                    });
+                    break;
+            }
+        }
+    };
+
     const updateLayout = (index) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         const array = [...drawerItemsData];
@@ -87,6 +102,7 @@ export default function DrawerContent(props) {
                             android_ripple={{
                                 color: "#d3d3d3",
                             }}
+                            onPress={() => handleOnPress(item)}
                         >
                             <Text style={styles.text}>{item.name}</Text>
                             {/* Separator */}
@@ -174,11 +190,7 @@ export default function DrawerContent(props) {
                                     android_ripple={{
                                         color: "#d3d3d3",
                                     }}
-                                    onPress={() => {
-                                        item.onPress &&
-                                            item.onPress.type === "navigation" &&
-                                            props.navigation.navigate(item.onPress.value);
-                                    }}
+                                    onPress={() => handleOnPress(item)}
                                 >
                                     {/* Drawer Item Icon */}
                                     <Image

@@ -139,12 +139,48 @@ const drawerItems = [
         itemName: "Eyeglasses",
         icon: require("./assets/icons/drawer/eyeglasses.png"),
         subItems: [
-            { name: "Air Collection" },
-            { name: "Air-Lightweight Collection" },
-            { name: "2 Pairs for 999- Classic" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
+            {
+                name: "Air Collection",
+                onPress: {
+                    type: "category",
+                    value: 8194,
+                },
+            },
+            {
+                name: "Air-Lightweight Collection",
+                onPress: {
+                    type: "collection",
+                    value: "bb_air_collection",
+                },
+            },
+            {
+                name: "2 Pairs for 999 - Classic",
+                onPress: {
+                    type: "collection",
+                    value: "eyeglasses_vc_collection",
+                },
+            },
+            {
+                name: "2 Pairs for 3000 - Premium",
+                onPress: {
+                    type: "collection",
+                    value: "premium_eyeglasses",
+                },
+            },
+            {
+                name: "Clearance Stock starting Rs.499",
+                onPress: {
+                    type: "collection",
+                    value: "midseasonsale_collection",
+                },
+            },
+            {
+                name: "BLU collection at Flat Rs.999",
+                onPress: {
+                    type: "category",
+                    value: 8178,
+                },
+            },
         ],
         isExpanded: false,
     },
@@ -152,23 +188,60 @@ const drawerItems = [
         itemName: "Sunglasses",
         icon: require("./assets/icons/drawer/sunglasses.png"),
         subItems: [
-            { name: "Air Collection" },
-            { name: "Air-Lightweight Collection" },
-            { name: "2 Pairs for 999- Classic" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
+            {
+                name: "All Sunglasses",
+                onPress: {
+                    type: "category",
+                    value: 8195,
+                },
+            },
+            {
+                name: "Fron Rs.899 - Classic",
+                onPress: {
+                    type: "collection",
+                    value: "sunglasses",
+                },
+            },
+            {
+                name: "2 Pairs for 3500 - Premium",
+                onPress: {
+                    type: "collection",
+                    value: "premium_sunglasses",
+                },
+            },
+            {
+                name: "Ray-Ban Sunglasses",
+                onPress: {
+                    type: "category",
+                    value: 2781,
+                },
+            },
+            {
+                name: "Polarized Collection",
+                onPress: {
+                    type: "collection",
+                    value: "Polarized_sunglasses_collection",
+                },
+            },
         ],
         isExpanded: false,
     },
     {
         itemName: "Powered Sunglasses",
         icon: require("./assets/icons/drawer/powered-sunglasses.png"),
+        onPress: {
+            type: "category",
+            value: 3426,
+        },
         subItems: null,
         isExpanded: false,
     },
     {
         itemName: "Gold Members Offers",
+        onPress: {
+            type: "webview",
+            value: "https://www.lenskart.com/me/catalog/cmsPage/id/page;668",
+        },
         icon: null,
         subItems: null,
         isExpanded: false,
@@ -182,14 +255,7 @@ const drawerItems = [
     {
         itemName: "Services",
         icon: require("./assets/icons/drawer/services.png"),
-        subItems: [
-            { name: "Air Collection" },
-            { name: "Air-Lightweight Collection" },
-            { name: "2 Pairs for 999- Classic" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
-            { name: "Air Collection" },
-        ],
+        subItems: [{ name: "Try at Home" }, { name: "Home Eye Checkup" }],
         isExpanded: false,
     },
     {
@@ -201,6 +267,10 @@ const drawerItems = [
     {
         itemName: "FAQ",
         icon: require("./assets/icons/drawer/faqs.png"),
+        onPress: {
+            type: "webview",
+            value: "https://www.lenskart.com/me/catalog/faq",
+        },
         subItems: null,
         isExpanded: false,
     },
