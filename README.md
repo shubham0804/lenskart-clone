@@ -5,6 +5,8 @@
 
 ## Screens
 
+[**Click Here to watch demo video**](https://youtu.be/JXAkDnwvdm0)
+
 **_1. Home Screen_**
 
 <img src="https://storage.googleapis.com/lenskart-rn-ui/Screen%20Recordings/Home%20Screen%20GIF-3.gif" height="350">
