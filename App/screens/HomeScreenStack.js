@@ -197,14 +197,19 @@ const HomeScreen2 = ({ navigation }) => {
                     return <Banner key={key.toString()} data={element.data} />;
                     break;
                 case "TYPE_BANNER_PAGER":
-                    // return <Text key={key}>Banner Pager</Text>;
-                    return (
-                        <BannerPager
-                            data={element.data}
-                            key={key.toString()}
-                            navigation={navigation}
-                        />
-                    );
+                    if (element.data.length > 1) {
+                        return (
+                            <BannerPager
+                                data={element.data}
+                                key={key.toString()}
+                                navigation={navigation}
+                            />
+                        );
+                    } else {
+                        let editedBanner = element.data[0];
+                        editedBanner.aspectRatio = "NORMAL";
+                        return <Banner key={key.toString()} data={editedBanner} />;
+                    }
                     break;
                 case "TYPE_CATEGORY_GRID":
                     // return <Text key={key}>Category Grid</Text>;
