@@ -6,6 +6,7 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { aspectRatio } from "../../constants/theme";
+import { handleUrl } from "../../middlewares";
 
 export default BannerPager = ({ navigation, data, keyId }) => {
     const width = useWindowDimensions().width;
@@ -19,8 +20,6 @@ export default BannerPager = ({ navigation, data, keyId }) => {
             setActive(slide);
         }
     };
-
-    // return <Text>Testing 123</Text>;
 
     return (
         <View key={keyId} style={{ marginVertical: 2 }}>
@@ -37,8 +36,8 @@ export default BannerPager = ({ navigation, data, keyId }) => {
                 overScrollMode="never"
                 contentContainerStyle={{ marginHorizontal: 3 }}
             >
-                {data.map(({ imageUrl }, index) => {
-                    if (index <= 5) {
+                {data.map(({ imageUrl, url }, index) => {
+                    if (index < data.length - 1) {
                         return (
                             <View key={index}>
                                 <RippleImage
@@ -53,12 +52,10 @@ export default BannerPager = ({ navigation, data, keyId }) => {
                                     }
                                     imageSource={{ uri: imageUrl }}
                                     imageStyle={styles.customerReviewImage}
-                                    // onPress={() => {
-                                    //     navigation.navigate("VideoScreen", {
-                                    //         title: "",
-                                    //         url: url,
-                                    //     });
-                                    // }}
+                                    onPress={() => {
+                                        // Check if url is a video
+                                        handleUrl(url, navigation);
+                                    }}
                                 />
                             </View>
                         );
@@ -69,7 +66,7 @@ export default BannerPager = ({ navigation, data, keyId }) => {
                                     rippleColor="rgba(44,44,44,0.3)"
                                     rippleStyle={[
                                         styles.customerReviewPressable,
-                                        { marginRight: 23 },
+                                        { marginRight: 20 },
                                     ]}
                                     imageSource={{ uri: imageUrl }}
                                     imageStyle={styles.customerReviewImage}

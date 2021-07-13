@@ -76,6 +76,61 @@ const customerReviewSlideData = [
     },
 ];
 
+const mapVideoUrl = [
+    // Customer Reviews
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=HYPqf_eVvvM",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-2.mp4",
+    },
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=77LA1h-j2b4",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-3.mp4",
+    },
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=IZpUQ-S_LcM",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-4.mp4",
+    },
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=ct7HIB9WjnQ",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-5.mp4",
+    },
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=guXq2pVzQlQ",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-6.mp4",
+    },
+    // {
+    //     youtubeUrl: "https://www.youtube.com/watch?v=fVymlKUGWC4",
+    //     videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-6.mp4",
+    // },
+    // Lenskart Assurance
+    {
+        youtubeUrl: "https://youtu.be/LYj36P8ae6o",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-by-robots.mp4",
+    },
+    {
+        youtubeUrl: "https://youtu.be/_YyOjNs-uBM",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-with-precision.mp4",
+    },
+    // Prescription Glasses Video
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=peBA5Sqll-0",
+        videoUrl:
+            "https://storage.googleapis.com/lenskart-rn-ui/Videos/Everything%20You%20Need%20To%20Know%20About%20Prescription%20Eyeglasses.mp4",
+    },
+    // How to buy online
+    {
+        youtubeUrl: "https://youtu.be/JAuuhHkpczg",
+        videoUrl:
+            "https://storage.googleapis.com/lenskart-rn-ui/Videos/Eyewear%20Online%20Shopping%20Guide.mp4",
+    },
+    // Lenskart Blu
+    {
+        youtubeUrl: "https://youtu.be/QAXWUvP8MGQ",
+        videoUrl:
+            "https://storage.googleapis.com/lenskart-rn-ui/Videos/Lenskart%20BLU%20_%20Blue%20Block%20Lenses%20that%20Protect%20Your%20Eyes.mp4",
+    },
+];
+
 const categoriesIconSlideData = [
     {
         label: "Men",
@@ -294,4 +349,5 @@ export {
     customerReviewSlideData,
     categoriesIconSlideData,
     drawerItems,
+    mapVideoUrl,
 };

@@ -6,6 +6,7 @@ import {
 } from "react-native-responsive-screen";
 import RippleImage from "./RippleImage";
 import * as Linking from "expo-linking";
+import { handleUrl } from "../middlewares";
 
 const ExtraWideBanner = ({ data, keyId }) => {
     return (
@@ -36,7 +37,7 @@ const WideBanner = ({ data, keyId }) => {
     );
 };
 
-const NormalBanner = ({ data, keyId }) => {
+const NormalBanner = ({ data, keyId, navigation }) => {
     return (
         <RippleImage
             keyId={keyId}
@@ -44,12 +45,7 @@ const NormalBanner = ({ data, keyId }) => {
             imageSource={{ uri: data.imageUrl }}
             rippleStyle={styles.normalTouchable}
             imageStyle={styles.normalImage}
-            // onPress={() => {
-            //     navigation.navigate("VideoScreen", {
-            //         title: "How to Buy Glasses Online",
-            //         url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Eyewear%20Online%20Shopping%20Guide.mp4",
-            //     });
-            // }}
+            onPress={() => handleUrl(data.url, navigation)}
         />
     );
 };
@@ -66,30 +62,16 @@ export const BannerGrid = ({ data, navigation }) => {
             <RippleImage
                 rippleColor="rgba(44,44,44,0.3)"
                 imageSource={{ uri: data[0].imageUrl }}
-                // imageSource={require("../assets/images/banners/made-by-robots.jpg")}
-                // rippleStyle={{ marginRight: 10 }}
-                // rippleStyle={[styles.portraitTouchable, { marginRight: 5 }]}
                 rippleStyle={[styles.portraitTouchable]}
                 imageStyle={styles.portraitImage}
-                onPress={() =>
-                    navigation.navigate("VideoScreen", {
-                        title: "",
-                        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-by-robots.mp4",
-                    })
-                }
+                onPress={() => handleUrl(data[0].url, navigation)}
             />
             <RippleImage
                 rippleColor="rgba(44,44,44,0.3)"
                 imageSource={{ uri: data[1].imageUrl }}
-                // imageSource={require("../assets/images/banners/made-with-precision.jpg")}
                 rippleStyle={styles.portraitTouchable}
                 imageStyle={styles.portraitImage}
-                onPress={() =>
-                    navigation.navigate("VideoScreen", {
-                        title: "",
-                        url: "https://storage.googleapis.com/lenskart-rn-ui/Videos/made-with-precision.mp4",
-                    })
-                }
+                onPress={() => handleUrl(data[1].url, navigation)}
             />
         </View>
     );
@@ -110,7 +92,7 @@ const StoreLocator = ({ data, keyId }) => {
     );
 };
 
-const Banner = ({ data, keyId }) => {
+const Banner = ({ data, keyId, navigation }) => {
     // console.log(data);
     // return <Text>Banner</Text>;
     switch (data.aspectRatio) {
@@ -119,7 +101,7 @@ const Banner = ({ data, keyId }) => {
         case "WIDE":
             return <WideBanner data={data} keyId={keyId} />;
         case "NORMAL":
-            return <NormalBanner data={data} keyId={keyId} />;
+            return <NormalBanner data={data} keyId={keyId} navigation={navigation} />;
         default:
             return <Text key={keyId.toString()}>Unknown Banner Sizes</Text>;
     }
