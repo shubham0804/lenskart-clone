@@ -70,6 +70,10 @@ export default BannerPager = ({ navigation, data, keyId }) => {
                                     ]}
                                     imageSource={{ uri: imageUrl }}
                                     imageStyle={styles.customerReviewImage}
+                                    onPress={() => {
+                                        // Check if url is a video
+                                        handleUrl(url, navigation);
+                                    }}
                                 />
                             </View>
                         );

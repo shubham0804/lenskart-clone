@@ -98,10 +98,10 @@ const mapVideoUrl = [
         youtubeUrl: "https://www.youtube.com/watch?v=guXq2pVzQlQ",
         videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-6.mp4",
     },
-    // {
-    //     youtubeUrl: "https://www.youtube.com/watch?v=fVymlKUGWC4",
-    //     videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-6.mp4",
-    // },
+    {
+        youtubeUrl: "https://www.youtube.com/watch?v=fVymlKUGWC4",
+        videoUrl: "https://storage.googleapis.com/lenskart-rn-ui/Videos/Reviews/review-7.mp4",
+    },
     // Lenskart Assurance
     {
         youtubeUrl: "https://youtu.be/LYj36P8ae6o",
